@@ -476,9 +476,6 @@ firebase/firestore
 
 firebase/storage
 
-flutterwave-angular-v3
-MIT
-
 moment
 MIT
 Copyright (c) JS Foundation and other contributors
