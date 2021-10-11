@@ -9,6 +9,9 @@ const registerSchema = schemas.registerSchema;
 router.get("/ping", (req, res) => {
     res.send({ message: 'active' })
 });
+router.post("/ping", (req, res) => {
+    res.send({ message: 'active' })
+});
 
 router.post("/login", (req, res) => {
 

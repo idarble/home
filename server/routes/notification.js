@@ -44,10 +44,7 @@ function sendNewsletter(req, res) {
             console.log(err);
         }
 
-        console.log(data);
-
-        var allSubscriptions = [];
-        try { allSubscriptions = JSON.parse(data); } catch { }
+        var allSubscriptions = data
         console.log('Total subscriptions', allSubscriptions.length);
 
 
@@ -56,6 +53,7 @@ function sendNewsletter(req, res) {
                 "title": "Angular News",
                 "body": "Newsletter Available!",
                 "icon": "assets/main-page-logo-small-hat.png",
+                "sound": "default",
                 "vibrate": [100, 50, 100],
                 "data": {
                     "dateOfArrival": Date.now(),
@@ -68,8 +66,13 @@ function sendNewsletter(req, res) {
             }
         };
 
-        Promise.all(allSubscriptions.map(sub => webpush.sendNotification(
-            sub, JSON.stringify(notificationPayload))))
+        Promise.all(allSubscriptions.map(sub => {
+
+            sub = JSON.parse(sub);
+            console.log(sub);
+
+            webpush.sendNotification(sub, JSON.stringify(notificationPayload))
+        }))
             .then(() => res.status(200).json({ message: 'Newsletter sent successfully.' }))
             .catch(err => {
                 console.error("Error sending notification, reason: ", err);

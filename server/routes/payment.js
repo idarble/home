@@ -58,6 +58,24 @@ router.post("/verify-transaction", (req, res) => {
         'url': `${process.env.FLUTTER_BASE_API_URL}/transactions/${req.body.transaction_id}/verify`,
         'headers': {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.FLUTTER_LIVE_SEC_KEY}`
+        },
+    };
+    request(options, function (error, response) {
+        if (error) {
+            console.log(error)
+        }
+        return res.status(200).send({ response: response.body });
+    });
+});
+
+router.post("/verify-transaction-1", (req, res) => {
+    var request = require('request');
+    var options = {
+        'method': 'GET',
+        'url': `${process.env.FLUTTER_BASE_TEST_API_URL}/transactions/${req.body.tx_ref}/verify`,
+        'headers': {
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${process.env.FLUTTER_TEST_SEC_KEY}`
         },
     };
